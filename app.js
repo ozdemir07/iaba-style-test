@@ -116,7 +116,7 @@ for (let i=0;i<NODE_COUNT;i++){
   n.userData = {
     type:'node',
     baseX:rx, baseY:ry, sizeBase:size,
-    amp: 10 + Math.random()*36, //18
+    amp: 10 + Math.random()*54, //18
     vx:  .05 + Math.random()*.14,
     vy:  .05 + Math.random()*.14,
     phase: Math.random()*Math.PI*2,
