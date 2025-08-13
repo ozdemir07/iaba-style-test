@@ -1,25 +1,158 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Style Space Viewer</title>
-<style>
-  :root { --bg:#0f1113; --fg:#eaeaea; }
-  html,body { margin:0; height:100%; background:var(--bg); color:var(--fg); overflow:hidden; }
-  #c { display:block; width:100vw; height:100vh; }
-  #tooltip {
-    position:fixed; left:12px; top:12px; z-index:10;
-    display:none; padding:10px; border-radius:10px;
-    background:rgba(15,17,19,.9); border:1px solid #24272b;
-    font:12px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  }
-  #tooltip img { width:96px; height:96px; object-fit:contain; display:block; margin-bottom:6px; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TEADS — image graph</title>
+  <style>
+    html,body {
+      margin:0;
+      height:100%;
+      background:#0f1113;
+      color:#fff;
+      font-family:system-ui,Segoe UI,Inter,Roboto,Arial,sans-serif;
+    }
+
+    /* canvas sits at z=0; panel is above everything */
+    #c {
+      position:fixed;
+      inset:0;
+      width:100vw;
+      height:100vh;
+      display:block;
+      z-index:0;
+    }
+
+    /* tooltip */
+    #tooltip {
+      position:fixed;
+      pointer-events:none;
+      display:none;
+      border:1px solid #444;
+      border-radius:8px;
+      background:#111b;
+      color:#ddd;
+      box-shadow:0 8px 30px rgba(0,0,0,.4);
+      overflow:hidden;
+      z-index:50000;
+    }
+    #tooltip img {
+      display:block;
+      max-width:200px;
+      max-height:200px;
+    }
+    #tip-cap {
+      font-size:12px;
+      padding:6px 8px;
+      border-top:1px solid #333;
+      white-space:nowrap;
+      max-width:200px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    /* control panel */
+    #panel {
+      position:fixed;
+      bottom:12px;
+      left:12px;
+      z-index:999999;
+      background:rgba(20,22,26,.95);
+      border:1px solid #2b2f35;
+      border-radius:10px;
+      padding:10px 12px;
+      backdrop-filter: blur(6px);
+      min-width:320px;
+    }
+    #panel h3 {
+      margin:0 0 8px 0;
+      font-weight:600;
+      font-size:14px;
+      letter-spacing:.2px;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin:8px 0;
+    }
+    .row label {
+      font-size:12px;
+      color:#cfd7e1;
+    }
+    .row input[type="range"] {
+      width: 100%;
+    }
+
+    .tiny {
+      font-size:11px;
+      color:#8ea0b4;
+    }
+
+    /* split container for min/max size sliders */
+    .split {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:8px;
+    }
+    .split .row {
+      margin:0;
+    }
+
+    .hr {
+      height:1px;
+      background:#2b2f35;
+      margin:8px 0;
+    }
+  </style>
 </head>
 <body>
   <canvas id="c"></canvas>
-  <div id="tooltip"><img id="tip-img" alt=""><div id="tip-cap"></div></div>
-  <script type="module" src="./app.js"></script>
+
+  <!-- tooltip -->
+  <div id="tooltip">
+    <img id="tip-img" alt="">
+    <div id="tip-cap"></div>
+  </div>
+
+  <!-- control panel -->
+  <div id="panel">
+    <h3>Graph Controls</h3>
+
+    <div class="hr"></div>
+    <div class="row">
+      <label>Node intensity <span class="tiny" id="nodeIntV"></span></label>
+      <input id="nodeInt" type="range" min="0" max="6" step=".3" value="3.00" />
+    </div>
+
+    <div class="split">
+      <div class="row">
+        <label>Node min size <span class="tiny" id="nodeMinV"></span></label>
+        <input id="nodeMin" type="range" min="0.04" max="0.20" step="0.005" value="0.071" />
+      </div>
+      <div class="row">
+        <label>Node max size <span class="tiny" id="nodeMaxV"></span></label>
+        <input id="nodeMax" type="range" min="0.08" max="0.25" step="0.005" value="0.143" />
+      </div>
+    </div>
+
+    <div class="hr"></div>
+    <div class="row">
+      <label>img↔img links <span class="tiny" id="imgImgV"></span></label>
+      <input id="imgImg" type="range" min="0" max="1" step="0.05" value="0.5" />
+    </div>
+    <div class="row">
+      <label>node↔img links <span class="tiny" id="nodeImgV"></span></label>
+      <input id="nodeImg" type="range" min="0" max="1" step="0.05" value="0.8" />
+    </div>
+    <div class="row">
+      <label>node↔node links <span class="tiny" id="nodeNodeV"></span></label>
+      <input id="nodeNode" type="range" min="0" max="1" step="0.05" value="0.6" />
+    </div>
+  </div>
+
+  <!-- cache-bust query so the browser picks up your latest app.js -->
+  <script type="module" src="./app.js?v=panel2"></script>
 </body>
 </html>
