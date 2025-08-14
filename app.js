@@ -101,22 +101,19 @@ const sprites = imgGroup.children;
 
 // ---------- HUB VIDEO (top-right, masked circle via CanvasTexture; hard-looping) ----------
 const hubVideo = document.getElementById('hubVideo');
-if (!hubVideo) console.warn('[hub] <video id="hubVideo"> missing');
+hubVideo.muted = true;
+hubVideo.playsInline = true;
+hubVideo.setAttribute('playsinline','');
+hubVideo.setAttribute('webkit-playsinline','');
+hubVideo.loop = true;
+hubVideo.setAttribute('loop','');
 
-if (hubVideo) {
-  // autoplay + bulletproof loop
-  hubVideo.muted = true;
-  hubVideo.playsInline = true;
-  hubVideo.loop = true;                    // HTML attribute + JS both
-  hubVideo.setAttribute('loop','');        // bulletproof for iOS/Safari
-  hubVideo.addEventListener('ended', ()=>{ // safety: restart if loop ignored
-    try{ hubVideo.currentTime = 0; }catch{}
-    hubVideo.play().catch(()=>{});
-  });
+// iOS safety: force replay if loop ignored
+hubVideo.addEventListener('ended', ()=>{ try{ hubVideo.currentTime = 0; }catch{} hubVideo.play().catch(()=>{}); });
 
-  (async()=>{ try{ await hubVideo.play(); }
-              catch{ window.addEventListener('pointerdown', ()=>hubVideo.play(), { once:true }); }})();
-}
+// Autoplay try; fall back to first tap
+(async()=>{ try{ await hubVideo.play(); } catch{ window.addEventListener('pointerdown', ()=>hubVideo.play(), { once:true }); }})();
+
 
 const HUB_SIZE_PX = 480;
 const HUB_MARGIN  = 50;

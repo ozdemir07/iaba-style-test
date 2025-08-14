@@ -163,11 +163,19 @@
 
   </div>
 
-  <!-- in index.html, anywhere before <script type="module" src="./app.js"> -->
   <video id="hubVideo"
-        src="./media/hub.mp4"            <!-- <= correct path -->
-        muted playsinline loop preload="auto" crossorigin="anonymous"
-        style="display:none"></video>
+    src="./media/hub.mp4"
+    muted
+    playsinline
+    webkit-playsinline
+    preload="auto"
+    crossorigin="anonymous"
+    controls="false"
+    controlslist="nodownload noplaybackrate nofullscreen"
+    disablepictureinpicture
+    style="position:fixed; left:-9999px; top:-9999px; width:1px; height:1px; opacity:0; pointer-events:none">
+  </video>
+
 
   <!-- cache-bust query so the browser picks up your latest app.js -->
   <script type="module" src="./app.js?v=panel2"></script>
