@@ -151,9 +151,23 @@
       <label>node↔node links <span class="tiny" id="nodeNodeV"></span></label>
       <input id="nodeNode" type="range" min="0" max="1" step="0.05" value="0.6" />
     </div>
+
+    <div class="row">
+      <label>video↔img links <span class="tiny" id="videoImgV"></span></label>
+      <input id="videoImg" type="range" min="0" max="1" step="0.05" value="0.7" />
+    </div>
+    <div class="row">
+      <label>video↔node links <span class="tiny" id="videoNodeV"></span></label>
+      <input id="videoNode" type="range" min="0" max="1" step="0.05" value="0.6" />
+    </div>
+
   </div>
 
-
+  <!-- in index.html, anywhere before <script type="module" src="./app.js"> -->
+  <video id="hubVideo"
+        src="./media/hub.mp4"            <!-- <= correct path -->
+        muted playsinline loop preload="auto" crossorigin="anonymous"
+        style="display:none"></video>
 
   <!-- cache-bust query so the browser picks up your latest app.js -->
   <script type="module" src="./app.js?v=panel2"></script>
