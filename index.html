@@ -120,20 +120,21 @@
   <div id="panel">
     <h3>Graph Controls</h3>
 
+
     <div class="hr"></div>
     <div class="row">
       <label>Node intensity <span class="tiny" id="nodeIntV"></span></label>
-      <input id="nodeInt" type="range" min="0" max="6" step=".3" value="3.00" />
+      <input id="nodeInt" type="range" min="0" max="1" step="0.05" value="0.50" />
     </div>
 
     <div class="split">
       <div class="row">
         <label>Node min size <span class="tiny" id="nodeMinV"></span></label>
-        <input id="nodeMin" type="range" min="0.04" max="0.20" step="0.005" value="0.071" />
+        <input id="nodeMin" type="range" min="0.05" max="0.20" step="0.01" value="0.1" />
       </div>
       <div class="row">
         <label>Node max size <span class="tiny" id="nodeMaxV"></span></label>
-        <input id="nodeMax" type="range" min="0.08" max="0.25" step="0.005" value="0.143" />
+        <input id="nodeMax" type="range" min="0.2" max="0.4" step="0.01" value="0.3" />
       </div>
     </div>
 
@@ -151,6 +152,8 @@
       <input id="nodeNode" type="range" min="0" max="1" step="0.05" value="0.6" />
     </div>
   </div>
+
+
 
   <!-- cache-bust query so the browser picks up your latest app.js -->
   <script type="module" src="./app.js?v=panel2"></script>
